@@ -22,8 +22,7 @@ public class Course {
 
     private Integer price;
 
-    private Set<Integer> studentIds;
+    private Integer creatorId;
 
-    private Set<Integer> teacherIds;
-
+    private Set<Integer> userIds;
 }

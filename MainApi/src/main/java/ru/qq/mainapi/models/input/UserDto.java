@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode
-public class StudentDto {
+public class UserDto {
 
     @NotNull
     private String name;

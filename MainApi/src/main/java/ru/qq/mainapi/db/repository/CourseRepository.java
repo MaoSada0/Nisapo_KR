@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Integer> {
-    @Query(value = "SELECT * FROM Course c WHERE :studentId = ANY(c.student_ids)", nativeQuery = true)
-    List<Course> findAllByStudentId(@Param("studentId") Integer studentId);
+    @Query(value = "SELECT * FROM Course c WHERE :userId = ANY(c.user_ids)", nativeQuery = true)
+    List<Course> findAllByUserId(@Param("userId") Integer userId);
 }

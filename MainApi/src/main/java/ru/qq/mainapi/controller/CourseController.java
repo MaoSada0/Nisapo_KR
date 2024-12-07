@@ -9,6 +9,7 @@ import ru.qq.mainapi.service.CourseService;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class CourseController {
 
     private final CourseService courseService;
@@ -42,11 +43,11 @@ public class CourseController {
     }
 
     @PutMapping("platform/course/student")
-    public ResponseEntity<?> addStudentToCourse(
+    public ResponseEntity<?> addUserToCourse(
             @RequestParam("courseId") Integer courseId,
-            @RequestParam("studentId") Integer studentId
+            @RequestParam("studentId") Integer userId
     ) {
-        return ResponseEntity.ok().body(courseService.addStudentToCourse(courseId, studentId));
+        return ResponseEntity.ok().body(courseService.addUserToCourse(courseId, userId));
     }
 
     @DeleteMapping("platform/course/student")

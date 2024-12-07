@@ -24,8 +24,8 @@ public class CourseService {
                         .name(dto.getName())
                         .description(dto.getDescription())
                         .price(Optional.ofNullable(dto.getPrice()).orElse(0))
-                        .teacherIds(new HashSet<>(List.of(dto.getCourseCreatorId())))
-                        .studentIds(new HashSet<>())
+                        .creatorId(dto.getCourseCreatorId())
+                        .userIds(new HashSet<>())
                         .build()
         );
     }
@@ -42,9 +42,9 @@ public class CourseService {
         courseRepository.deleteById(id);
     }
 
-    public Course addStudentToCourse(Integer courseId, Integer studentId) {
-        if (entityService.getStudentById(studentId).isEmpty()) {
-            throw new BadRequestException(String.format("No student with such id: %d", studentId));
+    public Course addUserToCourse(Integer courseId, Integer userId) {
+        if (entityService.getUserById(userId).isEmpty()) {
+            throw new BadRequestException(String.format("No student with such id: %d", userId));
         }
 
         var course = getCourseById(courseId);
@@ -53,13 +53,13 @@ public class CourseService {
             throw new BadRequestException(String.format("No course with such id: %d", courseId));
         }
 
-        course.get().getStudentIds().add(studentId);
+        course.get().getUserIds().add(userId);
 
         return courseRepository.save(course.get());
     }
 
     public void deleteStudentFromCourse(Integer courseId, Integer studentId) {
-        if (entityService.getStudentById(studentId).isEmpty()) {
+        if (entityService.getUserById(studentId).isEmpty()) {
             throw new BadRequestException(String.format("No student with such id: %d", studentId));
         }
 
@@ -69,6 +69,6 @@ public class CourseService {
             throw new BadRequestException(String.format("No course with such id: %d", courseId));
         }
 
-        course.get().getStudentIds().remove(studentId);
+        course.get().getUserIds().remove(studentId);
     }
 }
