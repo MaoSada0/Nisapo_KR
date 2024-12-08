@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to the Course Platform</h1>
+    <button id="login-btn">Login/Register</button>
+    <button id="view-courses-btn">View All Courses</button>
+    <button id="hide-courses-btn" class="hidden">Hide Courses</button>
+    <button id="create-course-btn">Create Course</button>
+
+    <div id="course-list" class="hidden">
+        <h2>Available Courses</h2>
+        <div id="courses"></div>
+    </div>
+
+    <div id="create-course-form" class="hidden">
+        <h2>Create a New Course</h2>
+        <form id="course-form">
+            <input type="text" id="course-name" placeholder="Course Name" required>
+            <textarea id="course-description" placeholder="Description" required></textarea>
+            <input type="number" id="course-price" placeholder="Price" required>
+            <input type="number" id="course-creator-id" placeholder="Creator ID" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
