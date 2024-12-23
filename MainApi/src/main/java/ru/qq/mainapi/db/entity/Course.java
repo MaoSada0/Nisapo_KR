@@ -1,19 +1,19 @@
 package ru.qq.mainapi.db.entity;
 
-import jakarta.persistence.*;
+
 import lombok.*;
 
 import java.util.Set;
 
 @EqualsAndHashCode
 @Builder
-@Entity
+//@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class Course {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;

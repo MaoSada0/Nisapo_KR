@@ -40,7 +40,8 @@ public class CourseController {
             @ApiResponse(responseCode = "200", description = "Курс найден",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = Course.class))),
-            @ApiResponse(responseCode = "400", description = "Курс не найден")
+            @ApiResponse(responseCode = "400", description = "Данные невалидны", content = @Content(schema = @Schema)),
+            @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера", content = @Content(schema = @Schema))
     })
     @GetMapping("platform/course")
     public ResponseEntity<?> getCourseById(@RequestParam("id") Integer id) {
@@ -72,7 +73,11 @@ public class CourseController {
     }
 
     @Operation(summary = "Добавить студента на курс", description = "Добавляет студента к указанному курсу")
-    @ApiResponse(responseCode = "200", description = "Студент успешно добавлен на курс")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Студент успешно добавлен на курс"),
+            @ApiResponse(responseCode = "400", description = "Данные невалидны", content = @Content(schema = @Schema)),
+            @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера", content = @Content(schema = @Schema))
+    })
     @PutMapping("platform/course/student")
     public ResponseEntity<?> addUserToCourse(
             @RequestParam("courseId") Integer courseId,

@@ -5,13 +5,13 @@ WORKDIR /build
 COPY ./pom.xml .
 COPY src ./src
 
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests && ls -la /build/target
 
 FROM openjdk:21-jdk-slim
 
 WORKDIR /app
 
-COPY --from=builder /build/target/MainApi.jar app.jar
+COPY --from=builder /build/target/MainApi-1.0.0-jar-with-dependencies.jar app.jar
 
 EXPOSE 8080
 

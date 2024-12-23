@@ -10,8 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const coursesDiv = document.getElementById("courses");
 
     loginBtn.addEventListener("click", () => {
-        alert("Redirecting to Login/Register page...");
+        window.location.href = "auth.html";
     });
+
 
     // Загрузка и отображение курсов
     viewCoursesBtn.addEventListener("click", async () => {
@@ -41,18 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Скрытие списка курсов
     hideCoursesBtn.addEventListener("click", () => {
         courseList.classList.add("hidden");
-        hideCoursesBtn.classList.add("hidden"); // Скрыть кнопку
+        hideCoursesBtn.classList.add("hidden");
     });
 
-    // Показ формы для создания курса
     createCourseBtn.addEventListener("click", () => {
         createCourseForm.classList.toggle("hidden");
     });
 
-    // Обработка создания курса
     courseForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 

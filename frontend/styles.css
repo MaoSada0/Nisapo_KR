@@ -73,3 +73,18 @@ form button {
 form button:hover {
     background-color: #218838;
 }
+
+form p {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+form p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+form p a:hover {
+    text-decoration: underline;
+}
+

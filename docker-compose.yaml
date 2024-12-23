@@ -1,21 +1,23 @@
 version: "3.8"
 services:
-  traefik:
-    image: traefik:v2.10
-    container_name: traefik
-    restart: unless-stopped
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--entrypoints.web.address=:80"
-    ports:
-      - "80:80"
-      - "8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+#  traefik:
+#    image: traefik:v2.10
+#    container_name: traefik
+#    restart: unless-stopped
+#    command:
+#      - "--api.insecure=true"
+#      - "--providers.docker=true"
+#      - "--entrypoints.web.address=:80"
+#    ports:
+#      - "80:80"
+#      - "8080:8080"
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
 
   postgres:
     image: postgres:16.4
+    networks:
+      - custom_network
     container_name: niaspokr_db
     hostname: niaspokr_db
     restart: unless-stopped
@@ -30,6 +32,8 @@ services:
 
   backend-1:
     image: openjdk:21-jdk-slim
+    networks:
+      - custom_network
     container_name: niaspokr_backend_1
     restart: unless-stopped
     build:
@@ -38,39 +42,46 @@ services:
     depends_on:
       - postgres
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://niaspokr_db:5432/niaspokr_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:32768/niaspokr_db
       SPRING_DATASOURCE_USERNAME: rootuser
       SPRING_DATASOURCE_PASSWORD: pass
-    labels:
-      - "traefik.http.routers.backend-1.rule=Host(`backend.local`)"
-      - "traefik.http.services.backend-1.loadbalancer.server.port=8090"
+    ports:
+      - "8080:8080"
 
-  backend-2:
-    image: openjdk:21-jdk-slim
-    container_name: niaspokr_backend_2
-    restart: unless-stopped
-    build:
-      context: ./
-      dockerfile: MainApi/Dockerfile
-    depends_on:
-      - postgres
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://niaspokr_db:5432/niaspokr_db
-      SPRING_DATASOURCE_USERNAME: rootuser
-      SPRING_DATASOURCE_PASSWORD: pass
-    labels:
-      - "traefik.http.routers.backend-2.rule=Host(`backend.local`)"
-      - "traefik.http.services.backend-2.loadbalancer.server.port=8090"
+#    labels:
+#      - "traefik.http.routers.backend.rule=Host(`backend.local`)"
+#      - "traefik.http.services.backend.loadbalancer.server.port=8090"
 #
-  frontend:
-    image: my-frontend:latest
-    container_name: niaspokr_frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    labels:
-      - "traefik.http.routers.frontend.rule=Host(`frontend.local`)"
-      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+#  backend-2:
+#    image: openjdk:21-jdk-slim
+#    container_name: niaspokr_backend_2
+#    restart: unless-stopped
+#    build:
+#      context: ./
+#      dockerfile: MainApi/Dockerfile
+#    depends_on:
+#      - postgres
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://niaspokr_db:5432/niaspokr_db
+#      SPRING_DATASOURCE_USERNAME: rootuser
+#      SPRING_DATASOURCE_PASSWORD: pass
+#    labels:
+#      - "traefik.http.services.backend.loadbalancer.server.port=8090"
+#
+#  frontend:
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile
+#    container_name: niaspokr_frontend
+#    labels:
+#      - "traefik.http.routers.frontend.rule=Host(`frontend.local`)"
+#      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+#    depends_on:
+#      - traefik
+
+networks:
+  custom_network:
+    driver: bridge
 
 volumes:
   postgres_data:

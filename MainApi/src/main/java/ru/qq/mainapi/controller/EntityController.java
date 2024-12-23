@@ -29,7 +29,9 @@ public class EntityController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Пользователь успешно создан",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserDto.class)))
+                            schema = @Schema(implementation = UserDto.class))),
+            @ApiResponse(responseCode = "400", description = "Данные невалидны", content = @Content(schema = @Schema)),
+            @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера", content = @Content(schema = @Schema))
     })
     public ResponseEntity<?> createUser(@RequestBody @Valid UserDto dto){
         return ResponseEntity.ok().body(entityService.createUser(dto));
@@ -41,7 +43,8 @@ public class EntityController {
             @ApiResponse(responseCode = "200", description = "Пользователь найден",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = User.class))),
-            @ApiResponse(responseCode = "400", description = "Пользователь не найден")
+            @ApiResponse(responseCode = "400", description = "Данные невалидны", content = @Content(schema = @Schema)),
+            @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера", content = @Content(schema = @Schema))
     })
     @GetMapping("platform/user")
     public ResponseEntity<?> getUserById(@RequestParam("id") Integer id){
@@ -80,7 +83,9 @@ public class EntityController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Список курсов успешно получен",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Course.class)))
+                            schema = @Schema(implementation = Course.class))),
+            @ApiResponse(responseCode = "400", description = "Данные невалидны", content = @Content(schema = @Schema)),
+            @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера", content = @Content(schema = @Schema))
     })
     @GetMapping("platform/user/courses")
     public ResponseEntity<?> getAllCoursesThatHaveUser(@RequestParam("id") Integer id) {
